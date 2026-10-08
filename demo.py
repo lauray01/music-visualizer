@@ -11,6 +11,8 @@ import librosa.display
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
+import analyze
+
 APP_TITLE = "UP Audio Visualizer"
 ABOUT_TEXT = (
     "UP Audio Visualizer\n"
@@ -73,24 +75,7 @@ def ensure_ffmpeg(log=print) -> bool:
     return has
 
 # ---------- Analysis ----------
-def analyze(audio_path: Path, log_cb=print):
-    # Ensure FFmpeg is reachable for compressed formats (safe to call always)
-    ensure_ffmpeg(log_cb)
 
-    audio_path = audio_path.expanduser().resolve(strict=True)
-    out_dir = audio_path.parent
-    out_prefix = audio_path.stem
-
-    def out(name: str) -> Path:
-        return out_dir / f"{out_prefix}_{name}.png"
-
-    log_cb(f"[i] Audio: {audio_path}")
-    log_cb(f"[i] Output dir: {out_dir}")
-
-    # getting information about the audio file
-    y, sr = librosa.load(str(audio_path), sr=None, mono=True)
-
-    
 
 # ---------- UI ----------
 class App(tk.Tk):
